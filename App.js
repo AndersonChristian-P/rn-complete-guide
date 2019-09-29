@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
 
@@ -13,7 +13,10 @@ export default function App() {
   }
 
   const addGoalHandler = () => {
-    setCourseGoals(currentGoals => [...currentGoals, enteredGoal]) // will always give you the latest State snapshot
+    setCourseGoals(currentGoals => [
+      ...currentGoals,
+      { key: Math.random().toString(), value: enteredGoal }
+    ]) // will always give you the latest State snapshot
   }
 
   // -- -- //
@@ -32,11 +35,17 @@ export default function App() {
         />
       </View>
 
-      <View>
-        {courseGoals.map((goal) => <Text key={goal} >{goal}</Text>)}
-      </View>
+      <FlatList
+        data={courseGoals}
+        renderItem={itemData => (
+          <View style={styles.listItem}>
+            <Text>{itemData.item.value}</Text>
+          </View>
+        )}
+      />
+
     </View >
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -53,5 +62,16 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     padding: 10
+  },
+  listItem: {
+    padding: 10,
+    marginVertical: 10,
+    backgroundColor: '#ccc',
+    borderColor: 'black',
+    borderWidth: 1
   }
-});
+})
+
+
+
+// when you have an unknown amount of items in a list that could be rendered you would use FlatList. FlatList takes in data. The data should point to an array. The other property is a a renderItem. renderItem takes a function that is called for every item in your data to render a list item
