@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
 
 const GoalItem = props => {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={props.onDelete}>
+    <TouchableOpacity onPress={props.onDelete.bind(this, props.id)}>
       <View style={styles.listItem}>
         <Text>{props.title}</Text>
       </View>
@@ -22,3 +22,7 @@ const styles = StyleSheet.create({
 })
 
 export default GoalItem
+
+// onPress={props.onDelete.bind(this, props.id)}
+// we bind 'this' to set a default argument - when this gets called - the default argument here would be props.id 
+// props.id is passed to onDelete when it's getting called upon a press
