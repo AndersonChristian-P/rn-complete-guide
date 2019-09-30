@@ -13,7 +13,7 @@ export default function App() {
   const addGoalHandler = enteredGoal => {
     setCourseGoals(currentGoals => [
       ...currentGoals,
-      { key: Math.random().toString(), value: enteredGoal }
+      { id: Math.random().toString(), value: enteredGoal }
     ]) // will always give you the latest State snapshot
   }
 
@@ -24,8 +24,9 @@ export default function App() {
       <GoalInput onAddGoal={addGoalHandler} />
 
       <FlatList
+        keyExtractor={(item, index) => item.id}
         data={courseGoals}
-        renderItem={itemData => <GoalItem title={itemData.item.value} />}
+        renderItem={itemData => <GoalItem onDelete={() => console.log('Does that work?')} title={itemData.item.value} />}
       />
 
     </View >
